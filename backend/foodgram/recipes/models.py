@@ -1,4 +1,4 @@
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 from core.models import CreatedModel
@@ -22,7 +22,7 @@ class Recipes(CreatedModel):
         related_name='recipes',
         verbose_name='Автор'
     )
-    image = image = models.ImageField(
+    image = models.ImageField(
         'Изображение',
         upload_to='recipes/',
         blank=True,
@@ -41,7 +41,8 @@ class Recipes(CreatedModel):
         verbose_name='Ингредиенты'
     )
     cooking_time = models.PositiveSmallIntegerField(
-        validators=(MinValueValidator(1),),
+        validators=(MinValueValidator(1),
+                    MaxValueValidator(43200000)),
         verbose_name='Время приготовления (мин)',
         help_text='Время приготовления (мин)',
     )
@@ -55,19 +56,23 @@ class Recipes(CreatedModel):
         return self.name
 
 
-class Favorite(CreatedModel):
+class FavoriteShopingModel(CreatedModel):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='favorites',
         verbose_name='Пользователь',
     )
     recipe = models.ForeignKey(
         Recipes,
         on_delete=models.CASCADE,
-        related_name='in_favorite',
         verbose_name='Рецепт',
     )
+
+    class Meta:
+        abstract = True
+
+
+class Favorite(FavoriteShopingModel):
 
     class Meta:
         ordering = ('pub_date', )
@@ -84,19 +89,7 @@ class Favorite(CreatedModel):
         return f'{self.recipe} у {self.user} в избранном'
 
 
-class ShopingCart(CreatedModel):
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='shopping_list',
-        verbose_name='Пользователь',
-    )
-    recipe = models.ForeignKey(
-        Recipes,
-        on_delete=models.CASCADE,
-        related_name='in_shopping_list',
-        verbose_name='Рецепт',
-    )
+class ShopingCart(FavoriteShopingModel):
 
     class Meta:
         ordering = ('pub_date', )
@@ -151,7 +144,8 @@ class RecipesIngredients(models.Model):
         verbose_name='Ингредиенты'
     )
     amount = models.PositiveSmallIntegerField(
-        validators=(MinValueValidator(1),),
+        validators=(MinValueValidator(1),
+                    MaxValueValidator(1000000)),
         verbose_name='Количество'
     )
 

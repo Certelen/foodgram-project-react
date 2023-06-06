@@ -1,4 +1,4 @@
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from rest_framework import serializers
 
 from recipes.models import RecipesIngredients
@@ -15,6 +15,10 @@ class PostRecipeIngredientSerializer(serializers.ModelSerializer):
                 1,
                 message='Количество ингредиента должно быть 1 или более.'
             ),
+            MaxValueValidator(
+                1000000,
+                message='Количество ингредиента должно быть 1000000 или менее.'
+            )
         )
     )
 

@@ -15,14 +15,15 @@ from .filters import RecipeFilter
 from .models import Favorite, Recipes, RecipesIngredients, ShopingCart
 from .serializers import (GetRecipesSerializer, PostRecipesSerializer,
                           ShortRecipeSerializer)
+from core.pagination import CustomPageNumberPagination
 
 
 class RecipesViewSet(ModelViewSetWithOutPut):
     queryset = Recipes.objects.all()
     permission_classes = (IsOwnerOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
-    search_fields = ('name',)
     filterset_class = RecipeFilter
+    pagination_class = CustomPageNumberPagination
 
     def get_serializer_class(self):
         if self.action in ('create', 'partial_update'):

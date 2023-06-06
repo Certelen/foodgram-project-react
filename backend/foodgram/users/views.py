@@ -11,7 +11,7 @@ from users.serializers import FollowSerializer
 
 class UserViewSet(UserViewSet):
     """Работа с пользователями."""
-    filter_backends = [filters.SearchFilter]
+    filter_backends = (filters.SearchFilter,)
     search_fields = ('username',)
     pagination_class = CustomPageNumberPagination
 

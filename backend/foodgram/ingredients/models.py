@@ -5,6 +5,7 @@ class Ingredients(models.Model):
     """Модель ингредиентов."""
     name = models.CharField(
         'Название',
+        unique=True,
         max_length=200,
     )
     measurement_unit = models.CharField(
@@ -15,6 +16,7 @@ class Ingredients(models.Model):
     class Meta:
         verbose_name = 'Ингредиент'
         verbose_name_plural = 'Ингредиенты'
+        ordering = ['name']
         constraints = (
             models.UniqueConstraint(
                 fields=('name', 'measurement_unit'),
@@ -23,4 +25,4 @@ class Ingredients(models.Model):
         )
 
     def __str__(self):
-        return self.name
+        return self.name[:10]

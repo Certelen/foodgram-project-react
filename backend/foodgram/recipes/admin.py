@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.utils.translation import gettext_lazy as _
+
 
 from .models import (Favorite, Recipes, RecipesIngredients, RecipesTags,
                      ShopingCart)
@@ -7,12 +7,14 @@ from .models import (Favorite, Recipes, RecipesIngredients, RecipesTags,
 
 class RecipeIngredientsInLine(admin.TabularInline):
     model = Recipes.ingredients.through
-    extra = 1
+    min_num = 1
+    extra = 0
 
 
 class RecipeTagsInLine(admin.TabularInline):
     model = Recipes.tags.through
-    extra = 1
+    min_num = 1
+    extra = 0
 
 
 @admin.register(Recipes)
@@ -25,7 +27,7 @@ class RecipeAdmin(admin.ModelAdmin):
     def in_favorite(self, obj):
         return obj.in_favorite.all().count()
 
-    in_favorite.short_description = _('Количество добавлений в избранное')
+    in_favorite.short_description = 'Количество добавлений в избранное'
 
 
 @admin.register(Favorite)

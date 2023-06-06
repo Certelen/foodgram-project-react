@@ -9,12 +9,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-mum86r_n#6(u$2g$-b3c4g^*t23uanb08r=zfzaqkkk%^664c7'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
+    'backend',
     'localhost',
     'web',
+    'foodgramyp19.ddns.net',
     '127.0.0.1',
+    '158.160.12.180',
 ]
 
 INSTALLED_APPS = [
@@ -33,11 +36,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    'colorfield',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -69,34 +75,26 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': os.getenv(
+            'DB_ENGINE', default='django.db.backends.postgresql'
+        ),
+        'NAME': os.getenv(
+            'DB_NAME', default='postgres'
+        ),
+        'USER': os.getenv(
+            'POSTGRES_USER', default='postgres'
+        ),
+        'PASSWORD': os.getenv(
+            'POSTGRES_PASSWORD', default='xxxyyyzzz'
+        ),
+        'HOST': os.getenv(
+            'DB_HOST', default='db'
+        ),
+        'PORT': os.getenv(
+            'DB_PORT', default='5432'
+        )
     }
 }
-
-"""Для переноса в контейнер"""
-# DATABASES = {
-#     'default': {
-#         'ENGINE': os.getenv(
-#             'DB_ENGINE', default='django.db.backends.postgresql'
-#         ),
-#         'NAME': os.getenv(
-#             'DB_NAME', default='postgres'
-#         ),
-#         'USER': os.getenv(
-#             'POSTGRES_USER', default='postgres'
-#         ),
-#         'PASSWORD': os.getenv(
-#             'POSTGRES_PASSWORD', default='xxxyyyzzz'
-#         ),
-#         'HOST': os.getenv(
-#             'DB_HOST', default='db'
-#         ),
-#         'PORT': os.getenv(
-#             'DB_PORT', default='5432'
-#         )
-#     }
-# }
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -116,9 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': 'django_filters.rest_framework.DjangoFilterBackend',
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
@@ -139,8 +134,12 @@ DJOSER = {
     'PERMISSIONS': {
         'user': ['rest_framework.permissions.AllowAny'],
         'user_list': ['rest_framework.permissions.AllowAny'],
-}}
+    }}
 
+CORS_ORIGIN_ALLOW = True
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_URLS_REGEX = r'^/api/.*$'
 
 AUTH_USER_MODEL = 'users.User'
 

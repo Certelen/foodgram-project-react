@@ -1,3 +1,4 @@
+from colorfield.fields import ColorField
 from django.db import models
 
 
@@ -8,8 +9,9 @@ class Tags(models.Model):
         max_length=200,
         unique=True,
     )
-    color = models.CharField(
+    color = ColorField(
         'Цвет',
+        default='#FF0000',
         max_length=7,
         unique=True,
     )
@@ -25,4 +27,4 @@ class Tags(models.Model):
         ordering = ('name',)
 
     def __str__(self):
-        return self.name
+        return self.name[:10]

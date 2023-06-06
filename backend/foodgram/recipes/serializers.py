@@ -1,4 +1,5 @@
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.exceptions import ValidationError
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 
@@ -39,16 +40,14 @@ class GetRecipesSerializer(serializers.ModelSerializer):
     def get_is_favorited(self, obj):
 
         user = self.context['request'].user
-        if user.is_anonymous:
-            return False
-        return Favorite.objects.filter(user=user, recipe=obj).exists()
+        return (not user.is_anonymous and
+                Favorite.objects.filter(user=user, recipe=obj).exists())
 
     def get_is_in_shopping_cart(self, obj):
 
         user = self.context['request'].user
-        if user.is_anonymous:
-            return False
-        return ShopingCart.objects.filter(user=user, recipe=obj).exists()
+        return (not user.is_anonymous and
+                ShopingCart.objects.filter(user=user, recipe=obj).exists())
 
     class Meta:
         model = Recipes
@@ -68,7 +67,9 @@ class GetRecipesSerializer(serializers.ModelSerializer):
 
 class PostRecipesSerializer(serializers.ModelSerializer):
     author = GetUserSerializer(read_only=True)
-    ingredients = PostRecipeIngredientSerializer(many=True)
+    ingredients = PostRecipeIngredientSerializer(
+        many=True,
+    )
     tags = serializers.PrimaryKeyRelatedField(
         queryset=Tags.objects.all(),
         many=True,
@@ -80,8 +81,10 @@ class PostRecipesSerializer(serializers.ModelSerializer):
                 1,
                 message='Время приготовления должно быть 1 минута или более.'
             ),
-        )
-    )
+            MaxValueValidator(
+                43200000,
+                message='Время приготовления должно быть меньше месяца.')
+        ))
 
     class Meta:
         fields = (
@@ -96,6 +99,27 @@ class PostRecipesSerializer(serializers.ModelSerializer):
         )
         model = Recipes
 
+    def validate_ingredients(self, value):
+        list_ingredients = [item['id'] for item in value]
+        all_ingredients, distinct_ingredients = (
+            len(list_ingredients), len(set(list_ingredients)))
+
+        if all_ingredients != distinct_ingredients:
+            raise ValidationError(
+                {'Ингредиенты должны быть уникальными'}
+            )
+        return value
+
+    def validate_tags(self, value):
+        all_tags, distinct_tags = (
+            len(value), len(set(value)))
+
+        if all_tags != distinct_tags:
+            raise ValidationError(
+                {'Теги должны быть уникальными'}
+            )
+        return value
+
     def add_ingredients(self, ingredients, recipe):
         for ingredient in ingredients:
             ingredient_id = ingredient['id']
@@ -106,19 +130,19 @@ class PostRecipesSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         author = self.context.get('request').user
-        tags_data = validated_data.pop('tags')
+        tags = validated_data.pop('tags')
         ingredients_data = validated_data.pop('ingredients')
         recipe = Recipes.objects.create(author=author, **validated_data)
+        recipe.tags.set(tags)
         self.add_ingredients(ingredients_data, recipe)
-        recipe.tags.set(tags_data)
         return recipe
 
     def update(self, recipe, validated_data):
         tags = validated_data.pop('tags')
         ingredients = validated_data.pop('ingredients')
         RecipesIngredients.objects.filter(recipe=recipe).delete()
-        self.add_ingredients(ingredients, recipe)
         recipe.tags.set(tags)
+        self.add_ingredients(ingredients, recipe)
         return super().update(recipe, validated_data)
 
     def to_representation(self, recipe):

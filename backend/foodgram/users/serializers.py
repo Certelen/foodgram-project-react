@@ -11,11 +11,9 @@ class GetUserSerializer(UserSerializer):
 
     def get_is_subscribed(self, object):
         user = self.context.get('request').user
-
-        if user.is_anonymous:
-            return False
-
-        return Follow.objects.filter(user=user, author=object.id).exists()
+        return not user.is_anonymous and Follow.objects.filter(
+            user=user, author=object.id
+        ).exists()
 
     class Meta:
         fields = (

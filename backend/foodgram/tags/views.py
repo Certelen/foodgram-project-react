@@ -7,4 +7,3 @@ from .serializers import TagsSerializer
 class TagsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Tags.objects.all()
     serializer_class = TagsSerializer
-    filter_backends = []
