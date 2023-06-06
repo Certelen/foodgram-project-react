@@ -69,8 +69,7 @@ class FollowSerializer(serializers.ModelSerializer):
     is_subscribed = serializers.SerializerMethodField()
 
     def get_is_subscribed(self, obj):
-        subscribed = GetUserSerializer.get_is_subscribed(self, obj)
-        return subscribed
+        return GetUserSerializer.get_is_subscribed(self, obj)
 
     def get_recipes(self, obj):
         author_recipes = Recipes.objects.filter(author=obj)

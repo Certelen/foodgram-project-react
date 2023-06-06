@@ -1,7 +1,6 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
-from rest_framework import serializers
-
 from recipes.models import RecipesIngredients
+from rest_framework import serializers
 
 from .models import Ingredients
 
