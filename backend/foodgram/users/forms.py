@@ -6,7 +6,7 @@ from .models import User
 
 
 class CustomUserCreationForm(UserCreationForm):
-    """Добавление обязательных полей при регистрации админом"""
+    """Добавление обязательных полей при регистрации админом """
 
     class Meta:
         model = User
