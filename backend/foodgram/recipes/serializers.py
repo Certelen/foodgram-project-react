@@ -1,12 +1,12 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from drf_extra_fields.fields import Base64ImageField
-from rest_framework import serializers
 from ingredients.models import Ingredients
 from ingredients.serializers import (GetRecipeIngredientSerializer,
                                      PostRecipeIngredientSerializer)
 from tags.models import Tags
 from tags.serializers import TagsSerializer
+from rest_framework import serializers
 from users.serializers import GetUserSerializer
 
 from .models import Favorite, Recipes, RecipesIngredients, ShopingCart

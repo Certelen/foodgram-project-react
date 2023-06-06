@@ -1,6 +1,6 @@
+from core.models import CreatedModel
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from core.models import CreatedModel
 from ingredients.models import Ingredients
 from tags.models import Tags
 from users.models import User

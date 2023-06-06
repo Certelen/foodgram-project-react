@@ -1,9 +1,9 @@
+from core.pagination import CustomPageNumberPagination
 from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
 from rest_framework import exceptions, filters, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from core.pagination import CustomPageNumberPagination
 from users.models import Follow, User
 from users.serializers import FollowSerializer
 
