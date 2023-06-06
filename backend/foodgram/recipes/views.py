@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from core.mixins import ModelViewSetWithOutPut
+from core.pagination import CustomPageNumberPagination
 from core.permissions import IsOwnerOrReadOnly
 from ingredients.models import Ingredients
 
@@ -15,7 +16,6 @@ from .filters import RecipeFilter
 from .models import Favorite, Recipes, RecipesIngredients, ShopingCart
 from .serializers import (GetRecipesSerializer, PostRecipesSerializer,
                           ShortRecipeSerializer)
-from core.pagination import CustomPageNumberPagination
 
 
 class RecipesViewSet(ModelViewSetWithOutPut):

@@ -1,8 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm, UsernameField
+from django.core.exceptions import ValidationError
+from django.forms import ModelForm
 
 from .models import User
-from django.forms import ModelForm
-from django.core.exceptions import ValidationError
 
 
 class CustomUserCreationForm(UserCreationForm):

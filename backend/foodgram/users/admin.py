@@ -1,8 +1,8 @@
 from django.contrib.admin import ModelAdmin, register
 from django.contrib.auth.admin import UserAdmin
 
+from .forms import CustomUserCreationForm, ValidateAdminData
 from .models import Follow, User
-from .forms import ValidateAdminData, CustomUserCreationForm
 
 
 @register(User)
