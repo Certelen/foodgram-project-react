@@ -7,9 +7,7 @@ services:
     env_file:
       - ./.env
   backend:
-    build:
-      context: certelen/foodgram_backend:latest
-      dockerfile: Dockerfile
+    image: certelen/foodgram_backend:latest
     restart: always
     volumes:
       - static_value:/app/static/
@@ -19,9 +17,7 @@ services:
     env_file:
       - ./.env
   frontend:
-    build:
-      context: certelen/foodgram_frontend:latest
-      dockerfile: Dockerfile
+    image: certelen/foodgram_frontend:latest
     volumes:
       - frontend_value:/app/build/
   nginx:
