@@ -8,7 +8,7 @@ services:
       - ./.env
   backend:
     build:
-      context: ../backend/foodgram
+      context: certelen/foodgram_backend:latest
       dockerfile: Dockerfile
     restart: always
     volumes:
@@ -20,7 +20,7 @@ services:
       - ./.env
   frontend:
     build:
-      context: ../frontend
+      context: certelen/foodgram_frontend:latest
       dockerfile: Dockerfile
     volumes:
       - frontend_value:/app/build/
