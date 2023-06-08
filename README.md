@@ -179,5 +179,15 @@ sudo docker compose exec backend python manage.py loaddata dump.json
 2. Пользователь отправляет POST-запрос со своими регистрационными данными ***email password*** на эндпоинт ```/api/token/login/``` , в ответе на запрос ему приходит auth-token. 
    Примечание: При взаимодействии с фронтэндом приложения данная операция происходит автоматически при авторизации.
 
+## Ссылки
+### Документация API Foodgram:
+http://158.160.12.180/api/docs/redoc.html
+### Развёрнутый проект:
+http://158.160.12.180
+http://foodgramyp19.ddns.net
+
+http://foodgramyp19.ddns.net/admin/
+http://158.160.12.180/admin/
+
 ## Об авторе
 - :white_check_mark: [Коломейцев Дмитрий(Certelen)](https://github.com/Certelen)
