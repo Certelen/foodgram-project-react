@@ -80,21 +80,21 @@ DB_PORT=5432
 * deploy - Автоматический деплой проекта на боевой сервер. Выполняется копирование файлов из репозитория на сервер:
 * send_message - Отправка уведомления в Telegram
 В репозитории на Github.com добавьте данные в **`Settings - Secrets - Actions secrets`**:
-- ```DOCKER_USERNAME``` - имя пользователя в DockerHub (Только строчные буквы)
-- ```DOCKER_PASSWORD``` - пароль пользователя в DockerHub
-- ```HOST``` - адрес боевого сервера
-- ```USER``` - пользователь
-- ```SSH_KEY``` - приватный ssh-ключ с компьютера, имеющего доступ к боевому серверу
-- ```PASSPHRASE``` - кодовая фраза для ssh-ключа (Если было указано при создании ssh-ключа)
-- ```DB_ENGINE``` - django.db.backends.postgresql
-- ```DB_NAME``` - postgres (по умолчанию)
-- ```POSTGRES_USER``` - postgres (по умолчанию)
-- ```POSTGRES_PASSWORD``` - xxxyyyzzz (по умолчанию)
-- ```DB_HOST``` - db
-- ```DB_PORT``` - 5432
-- ```SECRET_KEY``` - секретный ключ приложения django (необходимо чтобы были экранированы или отсутствовали скобки)
-- ```TELEGRAM_TO``` - id своего телеграм-аккаунта (можно узнать у @userinfobot, команда /start)
-- ```TELEGRAM_TOKEN``` - токен бота (получить токен можно у @BotFather, /token, имя бота)
+-- ```DOCKER_USERNAME``` - имя пользователя в DockerHub (Только строчные буквы)
+-- ```DOCKER_PASSWORD``` - пароль пользователя в DockerHub
+-- ```HOST``` - адрес боевого сервера
+-- ```USER``` - пользователь
+-- ```SSH_KEY``` - приватный ssh-ключ с компьютера, имеющего доступ к боевому серверу
+-- ```PASSPHRASE``` - кодовая фраза для ssh-ключа (Если было указано при создании ssh-ключа)
+-- ```DB_ENGINE``` - django.db.backends.postgresql
+-- ```DB_NAME``` - postgres (по умолчанию)
+-- ```POSTGRES_USER``` - postgres (по умолчанию)
+-- ```POSTGRES_PASSWORD``` - xxxyyyzzz (по умолчанию)
+-- ```DB_HOST``` - db
+-- ```DB_PORT``` - 5432
+-- ```SECRET_KEY``` - секретный ключ приложения django (необходимо чтобы были экранированы или отсутствовали скобки)
+-- ```TELEGRAM_TO``` - id своего телеграм-аккаунта (можно узнать у @userinfobot, команда /start)
+-- ```TELEGRAM_TOKEN``` - токен бота (получить токен можно у @BotFather, /token, имя бота)
 При внесении изменений в проект:
 ```
 git add .
