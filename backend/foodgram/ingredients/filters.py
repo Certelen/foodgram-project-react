@@ -1,5 +1,5 @@
-from django.db import models
 from django_filters import rest_framework, CharFilter
+from django.db import models
 
 from .models import Ingredients
 
