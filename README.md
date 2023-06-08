@@ -35,15 +35,17 @@ sudo apt update
 ```
 sudo apt upgrade -y
 ```
-Создайте папку `nginx`:
+Создайте папку `nginx` и `docs`:
 ```
 mkdir nginx
+mkdir docs
 ``` 
-Скопируйте файлы docker-compose.yaml и nginx/default.conf из вашего проекта на сервер в home/<ваш_username>/docker-compose.yaml и home/<ваш_username>/nginx/default.conf соответственно:
+Скопируйте файлы docker-compose.yaml, nginx/default.conf, ../docs/redoc.html, ../docs/openapi-schema.yml из вашего проекта на сервер в home/<ваш_username>/docker-compose.yaml, home/<ваш_username>/nginx/default.conf, home/<ваш_username>/docs/redoc.html, home/<ваш_username>/docs/openapi-schema.yml соответственно:
 ```
 scp docker-compose.yaml <username>@<host>/home/<username>/docker-compose.yaml
-sudo mkdir nginx
 scp default.conf <username>@<host>/home/<username>/nginx/default.conf
+scp redoc.html <username>@<host>/home/<username>/docs/redoc.html
+scp openapi-schema.yml <username>@<host>/home/<username>/docs/openapi-schema.yml
 ```
 Установите Docker и Docker-compose:
 ```
