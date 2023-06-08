@@ -1,5 +1,6 @@
-from rest_framework import filters, viewsets
+from rest_framework import viewsets
 
+from .filters import IngredientFilter
 from .models import Ingredients
 from .serializers import IngredientsSerializer
 
@@ -7,5 +8,4 @@ from .serializers import IngredientsSerializer
 class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Ingredients.objects.all()
     serializer_class = IngredientsSerializer
-    filter_backends = (filters.SearchFilter,)
-    search_fields = ('^name',)
+    filterset_class = IngredientFilter
