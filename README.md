@@ -151,7 +151,7 @@ sudo docker compose exec backend python manage.py loaddata dump.json
 9. Скачивать список покупок.
 
 ### Эндпоинты:
-- ```api/docs/redoc``` - Подробная документация по работе API.
+- ```api/docs/redoc.html``` - Подробная документация по работе API.
 - ```api/tags/``` - Получение, списка тегов (GET).
 - ```api/ingredients/``` - Получение, списка ингредиентов (GET).
 - ```api/ingredients/<id>``` - Получение ингредиента с соответствующим id (GET).
