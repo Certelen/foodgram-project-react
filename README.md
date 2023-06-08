@@ -70,7 +70,7 @@ SECRET_KEY=<SECRET_KEY>
 DB_ENGINE=django.db.backends.postgresql
 DB_NAME=postgres
 POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
+POSTGRES_PASSWORD=xxxyyyzzz
 DB_HOST=db
 DB_PORT=5432
 ```
