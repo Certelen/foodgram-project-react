@@ -1,6 +1,7 @@
 from django.db import models
 from django_filters import rest_framework, CharFilter
-from recipes.models import Ingredient
+
+from .models import Ingredients
 
 
 class IngredientFilter(rest_framework.FilterSet):
@@ -22,5 +23,5 @@ class IngredientFilter(rest_framework.FilterSet):
         return starts_with.union(contains).order_by('qs_order')
 
     class Meta:
-        model = Ingredient
+        model = Ingredients
         fields = ('name',)
