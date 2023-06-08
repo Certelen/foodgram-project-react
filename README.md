@@ -79,6 +79,7 @@ DB_PORT=5432
 2. build - Сборка и доставка докер-образов на Docker Hub
 3. deploy - Автоматический деплой проекта на боевой сервер. Выполняется копирование файлов из репозитория на сервер:
 4. send_message - Отправка уведомления в Telegram
+
 В репозитории на Github.com добавьте данные в **`Settings - Secrets - Actions secrets`**:
 * ```DOCKER_USERNAME``` - имя пользователя в DockerHub (Только строчные буквы)
 * ```DOCKER_PASSWORD``` - пароль пользователя в DockerHub
