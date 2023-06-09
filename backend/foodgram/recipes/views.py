@@ -42,13 +42,13 @@ class RecipesViewSet(ModelViewSetWithOutPut):
     def action_post_delete(self, model, pk):
         recipe = self.get_object()
         user = self.request.user
+        obj = model.objects.filter(recipe=recipe, user=user)
         if self.request.method == 'DELETE':
-            obj = model.objects.filter(recipe_id=recipe.id)
             if obj.exists():
                 obj.delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
             raise ValidationError('Рецепт отсутствует в вашем списке')
-        if model.objects.filter(recipe=recipe).exists():
+        if obj.exists():
             raise ValidationError('Рецепт уже добавлен')
         model.objects.create(recipe=recipe, user=user)
         serializer = ShortRecipeSerializer(instance=recipe)
