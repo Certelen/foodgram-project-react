@@ -119,7 +119,7 @@ class PostRecipesSerializer(serializers.ModelSerializer):
 
         if all_ingredients != distinct_ingredients:
             raise ValidationError(
-                detail=[{'id': [
+                detail=[{'ingredients': [
                     'Ингредиенты должны быть уникальными'
                 ]}]
             )
