@@ -91,11 +91,9 @@ class RecipesViewSet(ModelViewSetWithOutPut):
 
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    @action(
-            detail=True,
+    @action(detail=True,
             methods=('post', 'delete'),
-            permission_classes=(IsAuthenticated,)
-        )
+            permission_classes=(IsAuthenticated,))
     def shopping_cart(self, request, pk=None):
         user = self.request.user
         recipe = get_object_or_404(Recipes, pk=pk)
