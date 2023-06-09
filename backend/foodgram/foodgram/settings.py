@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', default='django-insecure-mum86r_n#6(u$2g$-b3c4g^*t23uanb08r=zfzaqkkk%^664c7')
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'backend',
