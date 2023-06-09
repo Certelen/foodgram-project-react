@@ -42,7 +42,7 @@ class RecipesViewSet(ModelViewSetWithOutPut):
     def action_post_delete(self, model, pk):
         recipe = self.get_object()
         user = self.request.user
-        obj = model.objects.filter(recipe=recipe, user=user)
+        obj = model.objects.filter(recipe_id=recipe.id, user=user)
         if self.request.method == 'DELETE':
             if obj.exists():
                 obj.delete()
