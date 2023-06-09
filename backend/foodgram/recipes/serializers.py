@@ -106,7 +106,7 @@ class PostRecipesSerializer(serializers.ModelSerializer):
         text = data.get('text')
         if Recipes.objects.filter(name=name, text=text).exists():
             raise ValidationError(
-                message='Рецепт с таким именем и описанием уже создан.'
+                'Рецепт с таким именем и описанием уже создан.'
             )
         return data
 
@@ -117,7 +117,9 @@ class PostRecipesSerializer(serializers.ModelSerializer):
 
         if all_ingredients != distinct_ingredients:
             raise ValidationError(
-                message='Ингредиенты должны быть уникальными'
+                detail=[{'id': [
+                    'Ингредиенты должны быть уникальными'
+                ]}]
             )
         return value
 
@@ -127,7 +129,9 @@ class PostRecipesSerializer(serializers.ModelSerializer):
 
         if all_tags != distinct_tags:
             raise ValidationError(
-                message='Теги должны быть уникальными'
+                detail=[{'id': [
+                    'Теги должны быть уникальными'
+                ]}]
             )
         return value
 
