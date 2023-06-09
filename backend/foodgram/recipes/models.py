@@ -77,12 +77,6 @@ class Favorite(FavoriteShopingModel):
         ordering = ('pub_date', )
         verbose_name = 'Избранное'
         verbose_name_plural = 'Избранные'
-        constraints = (
-            models.UniqueConstraint(
-                fields=('user', 'recipe'),
-                name='unique_favorite_recipe'
-            ),
-        )
 
     def __str__(self):
         return f'{self.recipe} у {self.user} в избранном'
@@ -94,12 +88,6 @@ class ShopingCart(FavoriteShopingModel):
         ordering = ('pub_date', )
         verbose_name = 'Список покупок'
         verbose_name_plural = 'Списки покупок'
-        constraints = (
-            models.UniqueConstraint(
-                fields=('user', 'recipe'),
-                name='unique_shopping_list_recipe'
-            ),
-        )
 
     def __str__(self):
         return f'{self.recipe} у {self.user} в списке покупок'
