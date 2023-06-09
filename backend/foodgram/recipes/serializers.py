@@ -117,9 +117,7 @@ class PostRecipesSerializer(serializers.ModelSerializer):
 
         if all_ingredients != distinct_ingredients:
             raise ValidationError(
-                detail=[{'id': [
-                    'Ингредиенты должны быть уникальными'
-                ]}]
+                message='Ингредиенты должны быть уникальными'
             )
         return value
 
@@ -129,9 +127,7 @@ class PostRecipesSerializer(serializers.ModelSerializer):
 
         if all_tags != distinct_tags:
             raise ValidationError(
-                detail=[{'id': [
-                    'Теги должны быть уникальными'
-                ]}]
+                message='Теги должны быть уникальными'
             )
         return value
 

@@ -46,21 +46,15 @@ class PostUserCreateSerializer(UserCreateSerializer):
         username = data.get('username')
         if User.objects.filter(email=email).exists():
             raise serializers.ValidationError(
-                detail=[{'id': [
-                    'Пользователь с этой почтой уже существует.'
-                ]}]
+                message='Пользователь с этой почтой уже существует.'
             )
         if User.objects.filter(username=username).exists():
             raise serializers.ValidationError(
-                detail=[{'id': [
-                    'Пользователь с этим именем уже существует.'
-                ]}]
+                message='Пользователь с этим именем уже существует.'
             )
         if username == 'me':
             raise serializers.ValidationError(
-                detail=[{'id': [
-                    'Нельзя использовать "me" как имя.'
-                ]}]
+                message='Нельзя использовать "me" как имя.'
             )
         return data
 
