@@ -4,7 +4,6 @@ from core.permissions import IsOwnerOrReadOnly
 from django.core.exceptions import ValidationError
 from django.db.models import Sum
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from ingredients.models import Ingredients
 from rest_framework import status
@@ -41,7 +40,7 @@ class RecipesViewSet(ModelViewSetWithOutPut):
         return self.action_post_delete(ShopingCart, pk)
 
     def action_post_delete(self, model, pk):
-        recipe = get_object_or_404(model, pk=pk)
+        recipe = self.get_object()
         user = self.request.user
         obj = model.objects.filter(user=user, recipe=recipe)
         if self.request.method == 'DELETE':
