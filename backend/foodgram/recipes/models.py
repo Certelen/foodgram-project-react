@@ -50,6 +50,12 @@ class Recipes(CreatedModel):
         ordering = ('-pub_date', )
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
+        constraints = (
+            models.UniqueConstraint(
+                fields=('name', 'text'),
+                name='unique_name_text'
+            ),
+        )
 
     def __str__(self):
         return self.name
