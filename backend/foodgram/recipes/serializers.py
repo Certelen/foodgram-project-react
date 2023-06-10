@@ -116,11 +116,7 @@ class PostRecipesSerializer(serializers.ModelSerializer):
             len(list_ingredients), len(set(list_ingredients)))
 
         if all_ingredients != distinct_ingredients:
-            raise ValidationError(
-                detail=[{value: [
-                    'Ингредиенты должны быть уникальными'
-                ]}]
-            )
+            raise ValidationError(value)
         return value
 
     def validate_tags(self, value):
