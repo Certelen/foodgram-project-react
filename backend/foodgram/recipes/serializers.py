@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from drf_extra_fields.fields import Base64ImageField
+from django.shortcuts import get_object_or_404
 from ingredients.models import Ingredients
 from ingredients.serializers import (GetRecipeIngredientSerializer,
                                      PostRecipeIngredientSerializer)
@@ -111,14 +112,17 @@ class PostRecipesSerializer(serializers.ModelSerializer):
         return data
 
     def validate_ingredients(self, value):
-        list_ingredients = [item['id'] for item in value]
-        all_ingredients, distinct_ingredients = (
-            len(list_ingredients), len(set(list_ingredients)))
-
-        if all_ingredients != distinct_ingredients:
+        if not value:
             raise ValidationError(
-                'Ингредиенты должны быть уникальными2'
+                detail='В рецепте нет ингредиентов.'
             )
+        ingredients = []
+        for item in value:
+            if item in ingredients:
+                raise ValidationError(
+                    f'{value}Ингредиенты должны быть уникальными.'
+                )
+            ingredients.append(item)
         return value
 
     def validate_tags(self, value):
@@ -135,10 +139,10 @@ class PostRecipesSerializer(serializers.ModelSerializer):
 
     def add_ingredients(self, ingredients, recipe):
         for ingredient in ingredients:
-            ingredient_id = ingredient['id']
+            ingredient = get_object_or_404(Ingredients, pk=ingredient['id'])
             amount = ingredient['amount']
             RecipesIngredients.objects.update_or_create(
-                recipe=recipe, ingredient=ingredient_id, amount=amount
+                recipe=recipe, ingredient=ingredient, amount=amount
             )
 
     def create(self, validated_data):
