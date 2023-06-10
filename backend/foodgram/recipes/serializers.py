@@ -100,39 +100,26 @@ class PostRecipesSerializer(serializers.ModelSerializer):
         )
         model = Recipes
 
-    def validate(self, data):
-        """Для предотвращения создания повторных рецептов"""
-        name = data.get('name')
-        text = data.get('text')
-        if Recipes.objects.filter(name=name, text=text).exists():
-            raise ValidationError(
-                'Рецепт с таким именем и описанием уже создан.'
-            )
-        return data
-
     def validate_ingredients(self, value):
-        list_ingredients = [item['id'] for item in value]
-        all_ingredients, distinct_ingredients = (
-            len(list_ingredients), len(set(list_ingredients)))
-
-        if all_ingredients != distinct_ingredients:
+        if not value:
             raise ValidationError(
-                detail=[
-                    {id: ['Ингредиенты должны быть уникальными']}
-                ]
-            )
-        return value
-
-    def validate_tags(self, value):
-        all_tags, distinct_tags = (
-            len(value), len(set(value)))
-
-        if all_tags != distinct_tags:
-            raise ValidationError(
-                detail=[{'id': [
-                    'Теги должны быть уникальными'
-                ]}]
-            )
+                detail=[{
+                    'id': ['В рецепте не добавлены ингредиентов.']
+                }])
+        ingredients = []
+        for item in value:
+            ingredient = item.get('ingredient')
+            if not ingredient:
+                raise ValidationError(
+                    detail=[{
+                        'id': ['В рецепте указаны недоступные ингредиенты.']
+                    }])
+            if item in ingredients:
+                raise ValidationError(
+                    detail=[{
+                        'id': ['В рецепте повторяются ингредиенты.']
+                    }])
+            ingredients.append(item)
         return value
 
     def add_ingredients(self, ingredients, recipe):
