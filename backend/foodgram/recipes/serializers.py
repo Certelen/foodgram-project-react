@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
-from drf_extra_fields.fields import Base64ImageField
 from django.shortcuts import get_object_or_404
+from drf_extra_fields.fields import Base64ImageField
 from ingredients.models import Ingredients
 from ingredients.serializers import (GetRecipeIngredientSerializer,
                                      PostRecipeIngredientSerializer)
