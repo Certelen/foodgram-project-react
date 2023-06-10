@@ -117,12 +117,8 @@ class PostRecipesSerializer(serializers.ModelSerializer):
             )
         ingredients = []
         for item in value:
-            ingredient = item.get('ingredient')
-            if not ingredient:
-                raise ValidationError(
-                    'В рецепте указаны недоступные ингредиенты.'
-                )
-            if item in ingredients:
+            ingredient = item.get('id')
+            if ingredient in ingredients:
                 raise ValidationError(
                     'В рецепте повторяются ингредиенты.'
                 )
