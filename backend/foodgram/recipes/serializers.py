@@ -117,7 +117,7 @@ class PostRecipesSerializer(serializers.ModelSerializer):
         for item in ingredients:
             if item in ingredients_list:
                 raise ValidationError(
-                    {'id': 'Ингредиенты должны быть уникальными.'}
+                    'Ингредиенты должны быть уникальными.'
                 )
             ingredients_list.append(item)
         return data
