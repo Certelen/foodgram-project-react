@@ -111,14 +111,22 @@ class PostRecipesSerializer(serializers.ModelSerializer):
         return data
 
     def validate_ingredients(self, value):
-        list_ingredients = [item['id'] for item in value]
-        all_ingredients, distinct_ingredients = (
-            len(list_ingredients), len(set(list_ingredients)))
-
-        if all_ingredients != distinct_ingredients:
+        if not value:
             raise ValidationError(
-                detail='Ингредиенты должны быть уникальными2'
+                'В рецепте нет ингредиентов.'
             )
+        ingredients = []
+        for item in value:
+            ingredient = item.get('ingredient')
+            if not ingredient:
+                raise ValidationError(
+                    'В рецепте указаны недоступные ингредиенты.'
+                )
+            if item in ingredients:
+                raise ValidationError(
+                    'В рецепте повторяются ингредиенты.'
+                )
+            ingredients.append(item)
         return value
 
     def validate_tags(self, value):
